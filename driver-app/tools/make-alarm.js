@@ -1,0 +1,32 @@
+const fs = require('fs');
+const rate = 22050;
+const seconds = 4;
+const n = rate * seconds;
+const data = Buffer.alloc(n * 2);
+let phase = 0;
+for (let i = 0; i < n; i++) {
+  const t = i / rate;
+  const sweep = (Math.sin(2 * Math.PI * 1.5 * t) + 1) / 2;
+  const freq = 650 + 700 * sweep;
+  phase += (2 * Math.PI * freq) / rate;
+  const v = Math.sign(Math.sin(phase)) * 0.55 + Math.sin(phase) * 0.4;
+  const s16 = Math.max(-32767, Math.min(32767, Math.round(v * 32767 * 0.95)));
+  data.writeInt16LE(s16, i * 2);
+}
+const h = Buffer.alloc(44);
+h.write('RIFF', 0);
+h.writeUInt32LE(36 + data.length, 4);
+h.write('WAVE', 8);
+h.write('fmt ', 12);
+h.writeUInt32LE(16, 16);
+h.writeUInt16LE(1, 20);
+h.writeUInt16LE(1, 22);
+h.writeUInt32LE(rate, 24);
+h.writeUInt32LE(rate * 2, 28);
+h.writeUInt16LE(2, 32);
+h.writeUInt16LE(16, 34);
+h.write('data', 36);
+h.writeUInt32LE(data.length, 40);
+fs.mkdirSync('assets', { recursive: true });
+fs.writeFileSync('assets/alarm.wav', Buffer.concat([h, data]));
+console.log('alarm.wav bytes: ' + (h.length + data.length));

@@ -1,0 +1,94 @@
+:root {
+  --green: #b7f000;
+  --ink: #1a1a1a;
+  --bg: #f6f7f2;
+  --card: #ffffff;
+  --line: #e6e8df;
+  --muted: #555555;
+  --red: #b42318;
+  --red-bg: #fdecec;
+}
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Cairo', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  direction: rtl;
+}
+a { color: inherit; }
+.app { display: flex; min-height: 100%; }
+.sidebar {
+  width: 230px; background: var(--card); border-left: 1px solid var(--line);
+  padding: 24px 16px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0;
+}
+.logo { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-weight: 700; }
+.logo-mark {
+  width: 40px; height: 40px; border-radius: 10px; background: var(--green);
+  display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px;
+}
+.nav { display: flex; flex-direction: column; gap: 8px; }
+.nav a { display: block; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: #444; }
+.nav a.active { background: var(--green); color: var(--ink); font-weight: 600; }
+.sidebar .spacer { flex: 1; }
+.main { flex: 1; padding: 28px; display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+h1 { margin: 0; font-size: 24px; }
+h2 { margin: 0 0 12px; font-size: 18px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.stat .label { color: var(--muted); font-size: 14px; }
+.stat .value { font-size: 30px; font-weight: 700; }
+.stat.green { background: var(--green); border-color: var(--green); }
+.stat.green .label { color: var(--ink); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: right; padding: 12px 10px; border-bottom: 1px solid #eee; white-space: nowrap; }
+th { color: var(--muted); font-weight: 600; font-size: 14px; }
+.btn {
+  min-height: 40px; padding: 0 16px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--card); font-family: inherit; font-size: 15px; cursor: pointer; color: var(--ink);
+}
+.btn.primary { background: var(--green); border-color: var(--green); font-weight: 700; }
+.btn.small { min-height: 34px; padding: 0 12px; font-size: 14px; }
+.btn.danger { color: var(--red); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field label { font-weight: 600; }
+input, select, textarea {
+  min-height: 44px; padding: 0 12px; border: 1px solid #d5d8cb; border-radius: 10px;
+  font-family: inherit; font-size: 16px; background: #fff; color: var(--ink);
+}
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 16px; }
+.chip { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 14px; background: #e6e8df; }
+.chip.green { background: #e8f7b8; }
+.chip.amber { background: #fff1d6; }
+.chip.red { background: var(--red-bg); color: var(--red); font-weight: 600; }
+.alert { background: var(--red-bg); color: var(--red); padding: 10px 16px; border-radius: 12px; font-weight: 600; }
+.error { color: var(--red); margin: 8px 0; }
+.login-wrap { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.login-card { width: 100%; max-width: 400px; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 800px) {
+  .app { flex-direction: column; }
+  .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; border-left: 0; border-bottom: 1px solid var(--line); padding: 12px; }
+  .logo { margin: 0 8px 0 0; }
+  .nav { flex-direction: row; flex-wrap: wrap; }
+  .sidebar .spacer { display: none; }
+  .main { padding: 16px; }
+}
+
+@media print {
+  .sidebar, .no-print, .topbar .chip { display: none !important; }
+  body { background: #fff; }
+  .main { padding: 0; }
+  .card { border: 1px solid #ccc; }
+}
+
+.modal-back { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+.modal { background: var(--card); border-radius: 16px; padding: 24px; width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; }
+.btn.big { min-height: 54px; padding: 0 28px; font-size: 18px; font-weight: 700; }
+.hint { color: var(--muted); font-size: 14px; }
+.req { color: var(--red); }
+@media print { .modal-back { display: none !important; } }
